@@ -14,8 +14,6 @@ class MyApp(QMainWindow, Ui_MainWindow):
         super().setupUi(MainWindow)  
         self.pushButton.clicked.connect(self.say_hello)
 
-        self.click_count = 0
-
     def say_hello(self):
         self.click_count += 1
         self.label.setText(f"Button clicked {self.click_count} time(s)!")
