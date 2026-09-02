@@ -19,7 +19,8 @@ fastf1.Cache.enable_cache(CACHE_DIR)
 class MyApp(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.session = None  # ultima sessione FastF1 caricata, tenuta per riutilizzo futuro
+        # ultima sessione FastF1 caricata, tenuta per riutilizzo futuro
+        self.session = None  
         self.setupUi(self)
 
     def setupUi(self, MainWindow):
