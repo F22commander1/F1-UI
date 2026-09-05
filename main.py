@@ -62,7 +62,7 @@ class MyApp(QMainWindow, Ui_MainWindow):
         # costruisce tutti i widget definiti in Qt Designer
         super().setupUi(MainWindow)  
         self.loadButton.clicked.connect(self.load_telemetry)
-        self.reset_telemetry.clicked.connect(self.reset_telemetry)
+        self.reset_telemetry.clicked.connect(self.on_reset_telemetry)
         # inserisce un canvas matplotlib dentro il widget placeholder del .ui
         self.figure = Figure(figsize=(5, 4))
         self.canvas = FigureCanvas(self.figure)
@@ -70,7 +70,7 @@ class MyApp(QMainWindow, Ui_MainWindow):
         canvas_layout.setContentsMargins(0, 0, 0, 0)
         canvas_layout.addWidget(self.canvas)
 
-    def reset_telemetry(self):
+    def on_reset_telemetry(self):
         # riporta canvas, campi e sessione allo stato iniziale post-avvio
         self.session = None
         self.figure.clear()

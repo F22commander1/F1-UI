@@ -143,7 +143,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="reset_telemetria">
+   <widget class="QPushButton" name="reset_telemetry">
     <property name="geometry">
      <rect>
       <x>850</x>

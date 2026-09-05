@@ -50,9 +50,9 @@ class Ui_MainWindow(object):
         self.canvasWidget = QtWidgets.QWidget(self.centralwidget)
         self.canvasWidget.setGeometry(QtCore.QRect(10, 75, 870, 500))
         self.canvasWidget.setObjectName("canvasWidget")
-        self.reset_telemetria = QtWidgets.QPushButton(self.centralwidget)
-        self.reset_telemetria.setGeometry(QtCore.QRect(850, 10, 41, 25))
-        self.reset_telemetria.setObjectName("reset_telemetria")
+        self.reset_telemetry = QtWidgets.QPushButton(self.centralwidget)
+        self.reset_telemetry.setGeometry(QtCore.QRect(850, 10, 41, 25))
+        self.reset_telemetry.setObjectName("reset_telemetry")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 900, 21))
@@ -77,14 +77,4 @@ class Ui_MainWindow(object):
         self.sessionComboBox.setItemText(4, _translate("MainWindow", "R"))
         self.driverLineEdit.setPlaceholderText(_translate("MainWindow", "Codice pilota (es. VER)"))
         self.loadButton.setText(_translate("MainWindow", "Carica telemetria"))
-        self.reset_telemetria.setText(_translate("MainWindow", "Reset"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        self.reset_telemetry.setText(_translate("MainWindow", "Reset"))
