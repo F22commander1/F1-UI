@@ -90,6 +90,7 @@ class MyApp(QMainWindow, Ui_MainWindow):
         # costruisce tutti i widget definiti in Qt Designer
         super().setupUi(MainWindow)  
         self.loadButton.clicked.connect(self.load_telemetry)
+        self.degradationButton.clicked.connect(self.load_degradation)
         self.reset_telemetry.clicked.connect(self.on_reset_telemetry)
         # inserisce un canvas matplotlib dentro il widget placeholder del .ui
         self.figure = Figure(figsize=(5, 4))
