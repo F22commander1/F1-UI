@@ -17,6 +17,7 @@ fastf1.Cache.enable_cache(CACHE_DIR)
 
 
 class MyApp(QMainWindow, Ui_MainWindow):
+    
     def __init__(self):
         super().__init__()
         # ultima sessione FastF1 caricata, tenuta per riutilizzo futuro
@@ -39,10 +40,6 @@ class MyApp(QMainWindow, Ui_MainWindow):
         # forza il ridisegno della UI prima della chiamata bloccante
         QApplication.processEvents()  
 
-
-
-
-
         try:
             # scarica (o legge dalla cache) la sessione ed estrae il giro più veloce del pilota
             session = fastf1.get_session(year, gran_prix, session_type)
@@ -56,7 +53,38 @@ class MyApp(QMainWindow, Ui_MainWindow):
 
         self._plot_telemetry(telemetry, driver)
         self.statusLabel.setText(f"{driver} - giro più veloce: {lap['LapTime']}")
-    
+
+    def load_degradation(self):
+        # legge sessione/pilota scelti dall'utente
+        year = self.yearSpinBox.value()
+        gran_prix = self.gpLineEdit.text().strip()
+        session_type = self.sessionComboBox.currentText()
+        driver = self.driverLineEdit.text().strip().upper()
+
+        if not gran_prix or not driver:
+            QMessageBox.warning(self, "Dati mancanti", "Inserisci Gran Premio e codice pilota.")
+            return
+
+        self.statusLabel.setText("Caricamento sessione in corso...")
+        QApplication.processEvents()
+
+        try:
+            # scarica (o legge dalla cache) la sessione ed estrae i giri del pilota
+            session = fastf1.get_session(year, gran_prix, session_type)
+            session.load(telemetry=False, laps=True, weather=False)
+            laps = session.laps.pick_driver(driver).pick_quicklaps()
+        except Exception as exc:
+            QMessageBox.critical(self, "Errore", f"Impossibile caricare i dati:\n{exc}")
+            self.statusLabel.setText("")
+            return
+
+        if laps.empty:
+            QMessageBox.warning(self, "Nessun dato", "Nessun giro utile trovato per questo pilota.")
+            self.statusLabel.setText("")
+            return
+
+        self._plot_degradation(laps, driver)
+        self.statusLabel.setText(f"{driver} - andamento tempi sul giro per mescola")
 
     def setupUi(self, MainWindow):
         # costruisce tutti i widget definiti in Qt Designer
