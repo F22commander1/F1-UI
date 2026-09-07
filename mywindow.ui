@@ -156,6 +156,19 @@
      <string>Reset</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="degradationButton">
+    <property name="geometry">
+     <rect>
+      <x>665</x>
+      <y>10</y>
+      <width>175</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Degradazione gomme</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
