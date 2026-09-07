@@ -125,6 +125,19 @@ class MyApp(QMainWindow, Ui_MainWindow):
         ax.legend()
         self.canvas.draw()
 
+    def _plot_degradation(self, laps, driver):
+        # mostra il tempo sul giro per numero di giro, raggruppato per mescola
+        self.figure.clear()
+        ax = self.figure.add_subplot(111)
+        for compound in laps["Compound"].unique():
+            stint = laps[laps["Compound"] == compound]
+            ax.scatter(stint["LapNumber"], stint["LapTime"].dt.total_seconds(), label=compound)
+        ax.set_xlabel("Numero di giro")
+        ax.set_ylabel("Tempo sul giro (s)")
+        ax.set_title(f"Degradazione gomme - {driver}")
+        ax.legend(title="Mescola")
+        self.canvas.draw()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
