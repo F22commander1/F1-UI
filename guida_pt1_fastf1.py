@@ -14,7 +14,6 @@ Testato con FastF1 3.8, pandas 2.3, Python 3.x.
 """
 
 import os
-import sys
 
 import fastf1
 import fastf1.plotting
@@ -212,7 +211,5 @@ def sezione_5_pick():
     selezione = laps.pick_teams("Ferrari").pick_quicklaps().pick_wo_box()
     print("Giri buoni Ferrari fuori dai box:", len(selezione))
 
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
+# Il runner (main, SEZIONI 1-11) vive in guida_pt2_fastf1.py, che importa
+# le sezioni 1-5 da qui. Esegui quel file per lanciare la guida completa.
