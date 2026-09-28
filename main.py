@@ -127,10 +127,6 @@ class MyApp(QMainWindow, Ui_MainWindow):
         self.driverLineEdit.clear()
         self.statusLabel.setText("")
 
-
-
-
-
     def _plot_telemetry(self, telemetry, driver):
         # ridisegna la traccia velocità-distanza del giro più veloce
         self.figure.clear()
