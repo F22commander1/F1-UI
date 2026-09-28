@@ -1,4 +1,5 @@
 import sys
+import fastf1
 
 # =============================================================================
 # 6. I tempi sono timedelta, non numeri
