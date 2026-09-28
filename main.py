@@ -24,6 +24,33 @@ class MyApp(QMainWindow, Ui_MainWindow):
         self.session = None  
         self.setupUi(self)
 
+    def read_inputs(self):
+        # legge sessione/pilota scelti dall'utente; None se mancano dati obbligatori
+        year = self.yearSpinBox.value()
+        gran_prix = self.gpLineEdit.text().strip()
+        session_type = self.sessionComboBox.currentText()
+        driver = self.driverLineEdit.text().strip().upper()
+
+        if not gran_prix or not driver:
+            QMessageBox.warning(self, "Dati mancanti", "Inserisci Gran Premio e codice pilota.")
+            return None
+
+        return year, gran_prix, session_type, driver
+
+    def _load_session(self, year, gran_prix, session_type, telemetry):
+        # scarica (o legge dalla cache) la sessione; None se la chiamata fallisce
+        self.statusLabel.setText("Caricamento sessione in corso...")
+        QApplication.processEvents()  # forza il ridisegno della UI prima della chiamata bloccante
+
+        try:
+            session = fastf1.get_session(year, gran_prix, session_type)
+            session.load(telemetry=telemetry, laps=True, weather=False)
+            return session
+        except Exception as exc:
+            QMessageBox.critical(self, "Errore", f"Impossibile caricare i dati:\n{exc}")
+            self.statusLabel.setText("")
+            return None
+
     def load_telemetry(self):
         # legge sessione/pilota scelti dall'utente
         year = self.yearSpinBox.value()
