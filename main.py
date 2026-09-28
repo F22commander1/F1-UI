@@ -156,4 +156,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MyApp()
     window.show()
-    sys.exit(app.exec_())  # resta bloccato qui finché l'event loop di Qt non termina
+    # resta bloccato qui finché l'event loop di Qt non termina
+    sys.exit(app.exec_())  
