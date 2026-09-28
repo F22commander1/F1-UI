@@ -82,27 +82,13 @@ class MyApp(QMainWindow, Ui_MainWindow):
         self.statusLabel.setText(f"{driver} - giro più veloce: {lap['LapTime']}")
 
     def load_degradation(self):
-        # legge sessione/pilota scelti dall'utente
-        year = self.yearSpinBox.value()
-        gran_prix = self.gpLineEdit.text().strip()
-        session_type = self.sessionComboBox.currentText()
-        driver = self.driverLineEdit.text().strip().upper()
-
-        if not gran_prix or not driver:
-            QMessageBox.warning(self, "Dati mancanti", "Inserisci Gran Premio e codice pilota.")
+        inputs = self.read_inputs()
+        if inputs is None:
             return
+        year, gran_prix, session_type, driver = inputs
 
-        self.statusLabel.setText("Caricamento sessione in corso...")
-        QApplication.processEvents()
-
-        try:
-            # scarica (o legge dalla cache) la sessione ed estrae i giri del pilota
-            session = fastf1.get_session(year, gran_prix, session_type)
-            session.load(telemetry=False, laps=True, weather=False)
-            laps = session.laps.pick_driver(driver).pick_quicklaps()
-        except Exception as exc:
-            QMessageBox.critical(self, "Errore", f"Impossibile caricare i dati:\n{exc}")
-            self.statusLabel.setText("")
+        session = self._load_session(year, gran_prix, session_type, telemetry=False)
+        if session is None:
             return
 
         if laps.empty:
