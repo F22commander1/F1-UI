@@ -91,6 +91,10 @@ class MyApp(QMainWindow, Ui_MainWindow):
         if session is None:
             return
 
+        driver_laps = session.laps.pick_driver(driver)
+        # scarta giri anomali (in/out-lap, safety car, traffico): tiene solo quelli entro il 107% del più veloce
+        # (soglia di default di FastF1, che richiama la regola del 107% della F1 stessa in qualifica)
+        laps = driver_laps.pick_quicklaps()
         if laps.empty:
             QMessageBox.warning(self, "Nessun dato", "Nessun giro utile trovato per questo pilota.")
             self.statusLabel.setText("")
